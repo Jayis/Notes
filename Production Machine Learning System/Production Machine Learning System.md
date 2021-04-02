@@ -9,7 +9,7 @@ course link: https://www.coursera.org/learn/gcp-production-ml-systems
   - [Serving Design Decisions](#serving-design-decisions)
     - [Static vs Dynamic Serving](#static-vs-dynamic-serving)
     - [Peakedness and Cardinality](#peakedness-and-cardinality)
-  - [Data Ingesting](#data-ingesting)
+  - [Data Ingestion](#data-ingestion)
     - [Data Scenarios](#data-scenarios)
     - [Different Types of GCP Buckets](#different-types-of-gcp-buckets)
     - [Different Service for Different Databases](#different-service-for-different-databases)
@@ -77,7 +77,7 @@ Based on the peakedness and the cardinality, we decide which design to use.
 
 ---
 
-## Data Ingesting
+## Data Ingestion
 
 ### Data Scenarios
 - Use local network to upload local data
