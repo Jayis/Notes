@@ -5,7 +5,7 @@ course link: https://www.coursera.org/learn/gcp-production-ml-systems
 - [Architecting Production ML Systems](#architecting-production-ml-systems)
   - [The Components of an ML System](#the-components-of-an-ml-system)
   - [Training Design Decisions](#training-design-decisions)
-    - [How is Physics unlike Fashion ?](#how-is-physics-unlike-fashion-)
+    - [How is Physics unlike Fashion?](#how-is-physics-unlike-fashion)
     - [Static vs Dynamic Training](#static-vs-dynamic-training)
   - [Serving Design Decisions](#serving-design-decisions)
     - [Static vs Dynamic Serving](#static-vs-dynamic-serving)
@@ -20,6 +20,18 @@ course link: https://www.coursera.org/learn/gcp-production-ml-systems
   - [Right and Wrong Decisions](#right-and-wrong-decisions)
   - [System Failure](#system-failure)
   - [Summary](#summary)
+- [Designing High-performance ML Systems](#designing-high-performance-ml-systems)
+  - [Aspects of Performance](#aspects-of-performance)
+    - [Training](#training)
+    - [Prediction](#prediction)
+  - [Why Distributed Training?](#why-distributed-training)
+  - [Distributed Training Architectures](#distributed-training-architectures)
+    - [Data Parallelism](#data-parallelism)
+    - [Model Parallelism](#model-parallelism)
+  - [Faster Input Pipelines](#faster-input-pipelines)
+  - [Inference](#inference)
+    - [Batch Pipeline](#batch-pipeline)
+    - [Streaming Pipeline](#streaming-pipeline)
 
 ---
 
@@ -49,7 +61,7 @@ In this module, we’ll talk about what else a production ML system needs to do 
 
 ## Training Design Decisions
 
-### How is Physics unlike Fashion ?
+### How is Physics unlike Fashion?
 Physics is constant whereas fashion isn't.  
 You have to decide whether the phenomenon you're modelling is more like physics or like fashion.
 
@@ -72,9 +84,9 @@ You have to decide whether the phenomenon you're modelling is more like physics 
 |              |     Static      |      Dynamic      |
 | :----------- | :-------------: | :---------------: |
 | Storage Cost |     higher      |       lower       |
-|      Latency |   low, fixed    |     variable      |
-|  Maintenance |      lower      |      higher       |
-|    Resources | space intensive | compute intensive |
+| Latency      |   low, fixed    |     variable      |
+| Maintenance  |      lower      |      higher       |
+| Resources    | space intensive | compute intensive |
 
 ### Peakedness and Cardinality
 
@@ -144,15 +156,15 @@ Here are several examples that changes in them could affect our models.
 3. The relationship between features and labels
 4. The distribution of inputs
 
-**How to deal with 1 and 2 ?**  
+**How to deal with 1 and 2?**  
 Think carefully before consuming data from sources when there's a chance you won't know about changes to them.  
 For 1, you can also make a local version of upstream models and update it on your schedule.
 
-**How to deal with 3 ?**  
+**How to deal with 3?**  
 Features should always be scrutinized before being added.  
 And all features should be subjected to **leave one out evaluations** to assess their importance.
 
-**How to deal with 4 ?**  
+**How to deal with 4?**  
 - monitor descriptive statistics(mean, std, etc.) for your input and outputs
 - monitor your residuals(prediction error) as a function of your inputs
 - use custom weights in your loss function to emphasize data recency
@@ -168,7 +180,7 @@ And all features should be subjected to **leave one out evaluations** to assess 
 
 Some decisions about data are a matter of weighing cost versus benefit, like short-term performance goals against long-term maintainability. Others though are about right and wrong.
 
-- use feature that is not available during runtime
+- use feature that is not available during decision time
 - partition train-val-test the wrong way
 
 ---
@@ -190,5 +202,140 @@ Some decisions about data are a matter of weighing cost versus benefit, like sho
   You need to constantly assess the value of all data sources, and weigh their performance benefit against the cost to maintain them
 - **Get ready to roll back**  
   There is no way to unteach a model something that it has learned already. The only thing you can do is to roll back to a model version that didn't learn from polluted data.
+
+---
+
+# Designing High-performance ML Systems
+
+In this module, you will learn how to identify performance considerations for machine learning models. Machine learning models are not all identical. For some models, you will be focused on improving I/O performance, and on others, you will be focused on squeezing out more computational speed.
+
+---
+
+## Aspects of Performance
+
+### Training
+
+There are three considerations
+- time  
+- cost
+- scale (data size, parallelism)
+
+There will be several trade-offs
+- training time vs. accuracy
+- data size vs. accuracy
+- single powerful machine vs. multiple weak machines
+- ..., etc.
+
+You also have the choice of starting from an earlier model checkpoint and training for just a few steps.  
+Typically, this will converge faster than training from scratch each time.
+
+| Constraint      |                             Input / Ouput                             |                                  CPU                                  |                              Memory                              |
+| :-------------- | :-------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------: |
+| Commonly Occurs |    Large inputs <br /> Input requires parsing <br /> Small models     |          Expensive computations <br /> Underpowered hardware          |           Large number of inputs <br /> Complex model            |
+| Take Action     | Store efficiently <br /> Parallelize reads <br /> Consider batch size | Train on faster accel. <br /> Upgrade processor <br /> Simplify model | Add more memory <br /> Use fewer layers <br /> Reduce batch size |
+
+### Prediction
+
+- Batch Prediction  
+  The considerations are very similar to that of training.
+
+- Online Prediction  
+  The considerations are quite different. This is because the end user is actually waiting for the prediction.
+
+For example, if you're doing product recommendations for the next day.  
+How many percent of users' recommendations should be precomputed by batch prediction and handle the rest via online prediction? 
+
+---
+
+## Why Distributed Training?
+
+Machine learning gets complex quickly, it's necessary to accelerate the training through parallel training.
+- heterogeneous systems
+- distributed systems
+- model architectures
+
+![](assets/loss_vs_datasize.jpg)
+*test loss vs. datasize*
+
+![](assets/model_flops_vs_year.jpg)
+*training flops vs. year*
+
+---
+
+## Distributed Training Architectures
+
+### Data Parallelism
+
+![](assets/data_parallelism.jpg)
+
+Two approaches to data parallelism
+- Parameter server  
+  (pros)  
+  - scales very well  
+  - more mature  
+  - applicable to model parallelism  
+  - heterogeneous workers  
+  - workers can be preempted by higher priority jobs, or go down to maintenance  
+  
+  (cons)  
+  - workers can get out of sync, which could delay the convergence  
+  
+- Sync Allreduce  
+  (pros)
+  - converge faster  
+
+  (cons)
+  - need homogeneous worker to reduce the variance of step time  
+  - need strong communication links to reduce the overhead of communication  
+
+Distribute training can be called directly through `estimator.train_and_evaluate()`.  
+Parameter server will be used as default.  
+Sync Allreduce can be refered to a TF function called `MirroredStrategy()`.  
+
+![](assets/async_parameter_server.jpg)
+*In asynchronous parameter server architecture, some devices are designated to be parameter servers, and others as workers. Each worker independently fetches the latest parameters from the parameter server, and computes gradients based on a subset of training samples. It then sends the gradients back to the parameter server which updates its copy of the parameters with those gradients.*
+
+![](assets/sync_allreduce.jpg)
+*In this approach, each worker holds a copy of the model's parameters. Each worker then compute gradients based on the training samples that they see, and they can communicate this between themselves to propagate the gradients and update their parameters. All of the workers are synchronized, conceptually the next forward pass does not begin until each worker has received the gradients, and updated their parameters.*
+
+![](assets/async_paraserver_vs_sync_allreduce.jpg)
+
+### Model Parallelism
+
+![](assets/model_parallelism.jpg)
+*When your model is so big that it doesn't fit into a single devices memory. So you then have to divide it into smaller parts that can compute over the same training samples on multiple devices*
+
+---
+
+## Faster Input Pipelines
+
+There are three approaches to reading data into TensorFlow. (from *slowest* to *fastest*)
+- Directly feed from Python
+- Use native TensorFlow Ops  
+  keep all of the operations in C++, rather than bringing data to python.
+- Read transformed TensorFlow records
+
+Here're several things you can do to even speed up the input pipeline.
+1. Parallelize file reading (I/O parallel)
+2. Parallelize map for transformation (CPU parallel)
+3. Pipelining with prefetching
+4. Using fused transformation ops
+
+---
+
+## Inference
+
+Several aspects to consider
+- throughput (QPS, queries per second)
+- latency (how long a query take)
+- cost (in terms of infrastructure and maintenance)
+
+### Batch Pipeline
+![](assets/batch_pred_pipelines.jpg)
+![](assets/performance_for_batch_pipelines.jpg)
+
+### Streaming Pipeline
+![](assets/streaming_pipelines.jpg)
+![](assets/performance_for_streaming_pipelines.jpg)
 
 ---
