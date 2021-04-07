@@ -32,6 +32,13 @@ course link: https://www.coursera.org/learn/gcp-production-ml-systems
   - [Inference](#inference)
     - [Batch Pipeline](#batch-pipeline)
     - [Streaming Pipeline](#streaming-pipeline)
+- [Hybrid ML systems](#hybrid-ml-systems)
+  - [Machine Learning on Hybrid Cloud](#machine-learning-on-hybrid-cloud)
+    - [Composability](#composability)
+    - [Portability](#portability)
+    - [Scalability](#scalability)
+  - [Kubeflow](#kubeflow)
+  - [TensorFlow Lite](#tensorflow-lite)
 
 ---
 
@@ -339,3 +346,58 @@ Several aspects to consider
 ![](assets/performance_for_streaming_pipelines.jpg)
 
 ---
+
+# Hybrid ML systems
+
+Understand the tools and systems available and when to leverage hybrid machine learning models.
+
+---
+
+## Machine Learning on Hybrid Cloud
+
+In order to build hybrid machine learning systems that work well both on-premises and in the cloud, your machine learning framework has to support three things, composability, portability, and scalability.
+
+### Composability
+
+Each machine learning stage, data analysis, training, model validation, monitoring, these are all independent systems. Everyone has a different way to handle all these stages.  
+So when we say composability, it's about the ability to compose a bunch of microservices together and the option to use what makes sense for your problem.
+
+![](assets/composability.jpg)
+
+### Portability
+
+Bring your workflow across different environments like developing/staging/production.
+
+### Scalability
+
+- More accelerators (GPU, TPU)
+- More CPUs
+- More dist/networking
+- More skillsets (data engineers, data scientists)
+- More teams
+- More experiments
+- ...
+
+---
+
+## Kubeflow
+
+So, you know what is really good at composability, portability, and scalability?  
+**Containers** and **Kubernetes**, except, turns out even then it's not so easy.
+
+The Kubeflow mission is to make it easy for everyone to develop, deploy, and manage portable, distributed machine learning on Kubernetes.
+
+Kubeflow currently provides
+- Jupyter notebook
+- Multi-architecture, distributed training
+- Multi-framework model serving
+- ...
+
+---
+
+## TensorFlow Lite
+TensorFlow Lite make specific compromises to enable machine-learning inference on low power or under-resourced devices.
+
+- variable node -> constant node
+- quantize model weight
+- ...
