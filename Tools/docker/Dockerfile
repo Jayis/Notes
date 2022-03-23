@@ -1,9 +1,12 @@
+# source image
 FROM $IMAGE_REPOSITORY:$TAG
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
+# please change $ROOT_PASSWD 
 RUN echo 'root:$ROOT_PASSWD' | chpasswd
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# please make sure following string replacement were all done correctly
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config
 RUN sed -i 's/#AuthorizedKeysFile/AuthorizedKeysFile/' /etc/ssh/sshd_config
