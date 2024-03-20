@@ -7,8 +7,12 @@ This roadmap is consisted of four courses
 - [Grokking the Coding Interview: Patterns for Coding Questions](./Grokking%20the%20Coding%20Interview-%20Patterns%20for%20Coding%20Questions/Grokking%20the%20Coding%20Interview-%20Patterns%20for%20Coding%20Questions.md)
 - [Grokking Dynamic Programming Patterns for Coding Interviews](./Grokking%20Dynamic%20Programming%20Patterns%20for%20Coding%20Interviews/Grokking%20Dynamic%20Programming%20Patterns%20for%20Coding%20Interviews.md)
 
-## TODOs in Coding Interview
-- idea explanation
-- code development
-- complexity analysis
-- test case generation
+## Steps in Coding Interview
+1. idea explanation  
+   - illustrate through examples
+2. algorithm walk through
+   - transform to "code" like stuff
+   - illustrate through examples
+3. code development
+4. test case generation
+5. complexity analysis
