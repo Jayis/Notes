@@ -98,3 +98,52 @@ Here are the challenges and remedies.
   - Employ advanced load balancing techniques that balance the need for session persistence with even traffic distribution, or redesign the application to reduce dependence on session state.
 - Health Checks and Monitoring
   - Implement comprehensive and regular health checks for backend servers, and use real-time monitoring tools to ensure traffic is always directed to healthy instances
+
+## API gateway
+### Introduction to API Gateway
+Its main purpose is to provide a single entry point for external consumers to access the services and functionalities of the backend system. It receives client requests, forwards them to the appropriate microservice, and then returns the server’s response to the client.
+
+The API gateway is responsible for tasks such as routing, authentication, and rate limiting. This enables microservices to focus on their individual tasks and improves the overall performance and scalability of the system.
+
+![](./assets/api_gateway_vs_load_balancer.webp)
+
+#### Difference between an API gateway and a load balancer
+An API gateway is focused on routing requests to the appropriate microservice, while a load balancer is focused on distributing requests evenly across a group of backend servers.
+
+### Usage of API gateway
+As a entry point of a backend system,  
+**Inward**:
+- Routing
+  - route the clients to appropriate service
+- Load balancing
+- Monitoring  
+  
+**outward-security**:
+- Rate limiting / throttling
+- Authentication / Authorization
+- Web Application Firewall (WAF)
+    
+**outward-early-response**:
+- Caching
+- Circuit breaker
+  
+**outward-post-processing**:
+- Transform response
+- Request and response validation
+- Monitoring
+
+**outward-version-control**:
+- API Versioning
+  - The API Gateway can manage multiple versions of an API, allowing developers
+  to introduce new features or make changes to existing ones without disrupting existing clients.
+- API Documentation
+
+### Advantages and disadvantages of using API gateway
+#### Advantages 
+- Simplified system design
+  - The API Gateway provides a single entry point for all API requests, making it easier to manage, monitor, and maintain APIs across multiple backend services. This simplifies the development and deployment process and reduces the complexity of the overall system.
+- Enhanced security
+- API Versioning and Backward Compatibility
+  - The API Gateway can manage multiple versions of an API, allowing developers to introduce new features or make changes without breaking existing clients. This enables a smoother transition for clients and reduces the risk of service disruptions.
+#### Disadvantages
+- Single Point of Failure
