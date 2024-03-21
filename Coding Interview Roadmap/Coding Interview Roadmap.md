@@ -9,10 +9,11 @@ This roadmap is consisted of four courses
 
 ## Steps in Coding Interview
 1. idea explanation  
-   - illustrate through examples
+   - **illustrate** through examples
 2. algorithm walk through
-   - transform to "code" like stuff
-   - illustrate through examples
+   - write algorithm down
+   - use example to **trace** the algorithm, **step-by-step**
 3. code development
+   - use example to **trace** the algorithm, **line-by-line**
 4. test case generation
 5. complexity analysis
