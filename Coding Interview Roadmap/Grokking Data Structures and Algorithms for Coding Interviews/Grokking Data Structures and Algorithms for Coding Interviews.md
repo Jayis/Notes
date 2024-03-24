@@ -45,3 +45,10 @@ Dynamic-sized Arrays:
 11. Parallel and Reverse Iteration:  
     Remember that sometimes iterating through an array from the end or through two arrays in parallel can be the key to an optimal solution.
 
+## Stack, Queue
+### Being Mindful in Coding Interviews
+- Check underflow and overflow conditions
+  - underflow:  
+    check if it's empty before remove an item
+  - overflow:  
+    check if it's full before adding an item
