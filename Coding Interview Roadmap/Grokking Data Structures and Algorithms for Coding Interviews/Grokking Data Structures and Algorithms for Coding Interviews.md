@@ -52,3 +52,19 @@ Dynamic-sized Arrays:
     check if it's empty before remove an item
   - overflow:  
     check if it's full before adding an item
+
+## Linked List
+### Small trick
+#### Insert a Dummy Node to the Beginning of the List
+a lot of the operation happens at the head can be easily handled as a normal operation, e.g. first insertion:
+1. init **dummy**, set **dummy** as **tail**
+    ```
+    dummy -> null
+    ^tail
+    ```
+2. insert
+    ```
+    dummy -> X -> null
+             ^tail
+    ```
+3. return **dummy.next** as the head of newly created list
