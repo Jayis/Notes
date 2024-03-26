@@ -139,11 +139,14 @@ As a entry point of a backend system,
 - API Documentation
 
 ### Advantages and disadvantages of using API gateway
-#### Advantages 
-- Simplified system design
-  - The API Gateway provides a single entry point for all API requests, making it easier to manage, monitor, and maintain APIs across multiple backend services. This simplifies the development and deployment process and reduces the complexity of the overall system.
-- Enhanced security
-- API Versioning and Backward Compatibility
-  - The API Gateway can manage multiple versions of an API, allowing developers to introduce new features or make changes without breaking existing clients. This enables a smoother transition for clients and reduces the risk of service disruptions.
-#### Disadvantages
-- Single Point of Failure
+- Advantages 
+  - Simplified system design
+    - The API Gateway provides a single entry point for all API requests, making it easier to manage, monitor, and maintain APIs across multiple backend services. This simplifies the development and deployment process and reduces the complexity of the overall system.
+  - Enhanced security
+  - API Versioning and Backward Compatibility
+    - The API Gateway can manage multiple versions of an API, allowing developers to introduce new features or make changes without breaking existing clients. This enables a smoother transition for clients and reduces the risk of service disruptions.
+- Disadvantages
+  - Single Point of Failure
+
+## Key Characteristics of Distributed Systems
+Plz read [Key Characteristics of Distributed Systems](./Key%20Characteristics%20of%20Distributed%20Systems.md).
