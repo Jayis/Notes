@@ -12,8 +12,9 @@ This roadmap is consisted of four courses
    - **illustrate** through examples
 2. algorithm walk through
    - write algorithm down
-   - use example to **trace** the algorithm, **step-by-step**
+   - use example to trace the **algorithm**, **step-by-step**
 3. code development
-   - use example to **trace** the code, **line-by-line**
+   - use example to trace the **code**, **line-by-line**
+   - be sure to act like a computer, run what you see, not what you think
 4. test case generation
 5. complexity analysis

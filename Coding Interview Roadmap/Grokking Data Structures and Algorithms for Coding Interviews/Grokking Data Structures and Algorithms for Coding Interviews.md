@@ -68,3 +68,10 @@ a lot of the operation happens at the head can be easily handled as a normal ope
              ^tail
     ```
 3. return **dummy.next** as the head of newly created list
+
+## Binary Search Tree
+###  Self-balancing BSTs
+#### AVL Tree
+For every node, height difference of left subtree and right subtree should be no more than 1
+#### Splay Tree
+To reduce the search time for the node, Splay the node to root after every operation.
