@@ -75,3 +75,40 @@ a lot of the operation happens at the head can be easily handled as a normal ope
 For every node, height difference of left subtree and right subtree should be no more than 1
 #### Splay Tree
 To reduce the search time for the node, Splay the node to root after every operation.
+
+## HashMap
+### Intro
+After reviewing the implement detail of a (simple) hashmap, I found several things to be noticed.
+
+Let's first remind ourselves of how hashmap works
+1. use hash function to map input to a hashed index
+2. locate in pre-allocated table with the hased index
+3. deal with collision
+
+#### Pre-allocated table
+Even though we say that the space complexity is O(K), which K is the number of unique elemnets in input.
+But the table is actually pre-allocated, either a "array" or "array of list", there's a constant space usage for O(1)-time operations.
+
+#### Collision
+##### Open Addressing (Closed Hashing):
+Open addressing techniques resolve hash collisions by probing for the next available slot within the hash table itself. This approach is called open addressing since it opens up the entire hash table for finding an empty slot during insertion.  
+It is also known as closed hashing because the insertion is restricted to existing slots within the table without using any external data structures.
+##### Separate Chaining (Open Hashing):
+Separate chaining offers a rather simpler chaining mechanism to resolve collisions. Each slot in the hash table points to a separate data structure, such as a linked-list. This linked-list or chain stores multiple elements that share the same hash index. When a collision occurs, new elements are simply appended to the existing list in the corresponding slot.  
+Separate chaining is an "open hashing" technique because the hash table is "open" to accommodate multiple elements within a single bucket (usually using a chain) to handle collisions.
+##### Perks & Downside of Separate Chaining
+- Perks
+  - Simple Implementation
+  - Dynamic Memory Usage
+- Downsides
+  - Increased Memory Overhead
+    - Cache Inefficiency
+    - External Fragmentation
+
+### Being Mindful in Interview
+#### Space complexity
+Be aware of the input space.  
+The space complexity is O(input space) rather then O(# of input chars).  
+
+For example, take a lower-case string and record the frequencies of each character.  
+The space complexity will not be O(N) but O(26), which equals to O(1).
