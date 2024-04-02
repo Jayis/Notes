@@ -9,6 +9,9 @@ This roadmap is consisted of four courses
 
 ## Steps in Coding Interview
 1. idea explanation  
+   - idea generation
+     1. focus on the information flow, from input to output
+     2. then focus on how the information is processed
    - **illustrate** through examples
 2. algorithm walk through
    - write algorithm down
