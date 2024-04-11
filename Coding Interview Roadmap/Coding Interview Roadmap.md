@@ -52,6 +52,11 @@ This roadmap is consisted of four courses
      - no solution cases
 
 #### Links
-[Hired In Tech - Algo design canvas](https://www.hiredintech.com/algorithms/algorithm-design-canvas/)
-[Hired In Tech - Algo design canvas - The Common Constraints Handout](https://www.hiredintech.com/files/the-common-constraints-handout.pdf)
-[TopCoder - How to find a solution](https://www.topcoder.com/thrive/articles/How%20To%20Find%20a%20Solution)
+[Hired In Tech - Algo design canvas](https://www.hiredintech.com/algorithms/algorithm-design-canvas/)  
+[Hired In Tech - Algo design canvas - The Common Constraints Handout](https://www.hiredintech.com/files/the-common-constraints-handout.pdf)  
+[TopCoder - How to find a solution](https://www.topcoder.com/thrive/articles/How%20To%20Find%20a%20Solution)   
+
+## TODOs
+- Greedy Algo  
+   It's pretty hard to explain why the action can cause the optimal solution.  
+   I think I'll need some time to delve into it.

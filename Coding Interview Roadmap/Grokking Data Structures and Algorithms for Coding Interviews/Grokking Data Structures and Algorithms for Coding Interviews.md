@@ -112,3 +112,48 @@ The space complexity is O(input space) rather then O(# of input chars).
 
 For example, take a lower-case string and record the frequencies of each character.  
 The space complexity will not be O(N) but O(26), which equals to O(1).
+
+## Heap
+### Time Complexity of Heapify() - O(N)
+Here we define heapify as "create a heap from an complete binary tree (or simply an array)".
+
+As naive thinking, we would use `N` insert operation to achieve building a new heap from `N` elements.  
+That would take us `O(N*logN)` to build the heap.
+
+So how does heapify make it in `O(N)` time?  
+One key difference would be that, "N times insertion" will maintain a legal heap after each insertion, while heapify does not maintain a legal heap after each step.
+
+#### Algorithm
+The idea would be
+- Traverse the heap, bottom-up, for each node and its corresponding subtree
+  - heapify the subtree
+ 
+If the left-subtree and the right-subtree of the subtree are both legal heaps, then heapify of the subtree takes only `O(height of the subtree)` time.  
+Because, we only need to heapify the root node. In the worst case, we'll need to swap it from root to leave.  
+
+#### Time Complexity
+So the time complexity can be calculated as following:
+1. summing all nodes' time complexity, root to leave
+    ```
+    summation of (# of node of layer) * (# of swaps needed)
+    = 1 * logN + 2 * (logN - 1) + 4 * (logN - 2) + ... + 2^(logN - 1) * 1 + 2^logN * 0
+    ```
+2. rewrite with regards to k
+    ```
+    summation(2^k * (logN - k)), k = 0 ~ logN  
+    = summation(2^k * logN) - summation(2^k * k), k = 0 ~ logN  
+    = logN * summation(2^k) - summation(2^k * k), k = 0 ~ logN  
+    ```
+
+    And brings in the formulas.  
+    > for summation(2^k) see [S(x^k)](Appendix.md#summationxk)  
+    > for summation(2^k * k) see [S(k*x^k)](Appendix.md#summationk--xk)
+    ```
+    = logN * (2^(logN+1) - 1) - 2 * ( (logN+1)*2^logN - 2^(logN+1) + 1)
+    = logN * 2^(logN+1) - logN - (logN+1)*2^(logN+1) + 2^(logN+2) - 2
+    = 2^(logN+2) + 2^(logN+1) - logN - 2
+    = 4N + 2N - logN - 2
+    = 6N - logN - 2
+    ```
+
+    And `6N - logN - 2` is O(N).
