@@ -157,3 +157,56 @@ So the time complexity can be calculated as following:
     ```
 
     And `6N - logN - 2` is O(N).
+
+## Graph
+### BFS
+```python
+from collections import deque
+
+def BFS(adjList, start):
+    q = deque()
+    qed = set()  # qed stands for queued
+
+    q.append(start)
+    qed.add(start)
+
+    while len(q) > 0:
+        cur_vertex = q.popleft() 
+        # where we visit cur_vertex
+        
+        for neighbor in adjList[cur_vertex]:
+            if neighbor not in qed:
+                q.append(neighbor)
+                qed.add(neighbor)
+```
+Generally, everyone use `visited` rather than `qed`, but I think `qed` explain what we're doing better.  
+Because **visiting** is done when we popped a vertex from queue.  
+The `qed` just tells us that we don't need to push the neighbor again.  
+Because the queue is FIFO, if a vertex has already been queued before, push it again won't change the BFS result.
+
+### DFS
+We can implement DFS recursively or iteratively(with stack).  
+Implement DFS by recursion is pretty forward. There's nothing to note.  
+Below is the code implementing it with stack.
+```python
+def DFS(adjList, start):
+    visited = set()
+    
+    stack = [start]
+
+    while len(stack) > 0:
+        cur_vertex = stack.pop()
+        
+        if cur_vertex in visited:
+            continue
+        
+        # where we visit cur_vertex
+        visited.add(cur_vertex)
+
+        for neighbor in adjList[cur_vertex]:
+            if neighbor not in visited:
+                stack.append(neighbor)
+```
+Here we can see using `visited` explains itself better.  
+If we use `in_stack (or stacked)`, that won't work correctly because stack is **FILO**, newer elements matters.  
+So even if the neighbor has already been pushed to the stack before, we still need to push it again, cause the newly pushed one would be processed earlier.
