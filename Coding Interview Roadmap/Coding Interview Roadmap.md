@@ -60,3 +60,6 @@ This roadmap is consisted of four courses
 - Greedy Algo  
    It's pretty hard to explain why the action can cause the optimal solution.  
    I think I'll need some time to delve into it.
+- [DSA todo](./Grokking%20Data%20Structures%20and%20Algorithms%20for%20Coding%20Interviews/TODO.md)
+- [Coding Pattern todo](./Grokking%20the%20Coding%20Interview-%20Patterns%20for%20Coding%20Questions/TODO.md)
+- [Dynamic Programming todo](./Grokking%20Dynamic%20Programming%20Patterns%20for%20Coding%20Interviews/TODO.md)
